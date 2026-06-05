@@ -6,20 +6,23 @@ export default function ImpactPanel({ user, updateUserAction }) {
 
   return (
     <div className="card">
-      <h3>🌎 Impacto (apertar uma vez já basta)</h3>
+      <h3>🌎 Impacto</h3>
       <div className="impact-actions">
         <button className="btn" onClick={() => updateUserAction('addTree')}>
-          🌳 Plantar árvore (+15 pts)
+          <span>🌳 Plantar árvore</span>
+          <span className="action-count">{user?.trees ?? 0}</span>
         </button>
         <button className="btn" onClick={() => updateUserAction('addRecycle')}>
-          ♻️ Reciclar (+10 pts)
+          <span>♻️ Reciclar</span>
+          <span className="action-count">{user?.recyclings ?? 0}</span>
         </button>
         <button className="btn" onClick={() => updateUserAction('addWalk')}>
-          🚶 Caminhar (+12 pts)
+          <span>🚶 Caminhar</span>
+          <span className="action-count">{user?.walks ?? 0}</span>
         </button>
       </div>
       <button className="btn secondary" onClick={handleReset}>
-        🔄 Reiniciar jogo local(perde o acesso ao seu progresso)
+        🔄 Reiniciar jogo local (perde o acesso ao seu progresso)
       </button>
     </div>
   );

@@ -299,6 +299,26 @@ button:disabled {
   gap: 14px;
 }
 
+.impact-actions button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #eef4e8;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
 .assistant-card {
   background: linear-gradient(180deg, rgba(19, 57, 31, 0.88), rgba(10, 26, 14, 0.85));
 }
