@@ -6,7 +6,7 @@ export default function ImpactPanel({ user, updateUserAction }) {
 
   return (
     <div className="card">
-      <h3>🌎 Impacto</h3>
+      <h3>🌎 Impacto (apertar uma vez já basta)</h3>
       <div className="impact-actions">
         <button className="btn" onClick={() => updateUserAction('addTree')}>
           🌳 Plantar árvore (+15 pts)
