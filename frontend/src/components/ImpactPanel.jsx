@@ -19,7 +19,7 @@ export default function ImpactPanel({ user, updateUserAction }) {
         </button>
       </div>
       <button className="btn secondary" onClick={handleReset}>
-        🔄 Reiniciar jogo local
+        🔄 Reiniciar jogo local(perde o acesso ao seu progresso)
       </button>
     </div>
   );
