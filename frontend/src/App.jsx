@@ -35,6 +35,7 @@ function AppContent() {
       <main className="page-center">
         <div className="card welcome-card">
           <h2>🌱 Bem-vindo ao EcoMente</h2>
+          <p className="note">Digite seu nome para começar a jornada de impacto ambiental.</p>
           <form onSubmit={handleSubmit}>
             <input name="name" placeholder="Seu nome" required />
             <button type="submit" className="btn">Iniciar jornada</button>
@@ -54,13 +55,46 @@ function AppContent() {
   return (
     <>
       <main className="app-shell">
-        <Dashboard user={user} editUserName={handleEditName} />
-        <MoodSelector user={user} setMood={setMood} />
-        <IAAssistant user={user} />
-        <MissionCard user={user} updateUserAction={updateUserAction} />
-        <Challenges user={user} updateUserAction={updateUserAction} />
-        <ImpactPanel user={user} updateUserAction={updateUserAction} />
-        <Ranking />
+        <section className="hero-card card">
+          <div className="hero-copy">
+            <span className="eyebrow">Sua jornada sustentável</span>
+            <h1>Transforme hábitos verdes em impacto real.</h1>
+            <p className="hero-subtitle">
+              Acompanhe pontos, complete missões e suba no ranking enquanto cuida do planeta.
+            </p>
+          </div>
+          <div className="hero-actions">
+            <button className="btn">Continuar</button>
+            <button
+              type="button"
+              className="btn secondary"
+              onClick={() => document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Ver missão
+            </button>
+          </div>
+        </section>
+
+        <section id="dashboard" className="section-grid">
+          <Dashboard user={user} editUserName={handleEditName} />
+          <IAAssistant user={user} />
+        </section>
+
+        <section id="bem-estar" className="section-grid">
+          <MoodSelector user={user} setMood={setMood} />
+          <div id="mission">
+            <MissionCard user={user} updateUserAction={updateUserAction} />
+          </div>
+        </section>
+
+        <section id="desafios" className="section-grid">
+          <Challenges user={user} updateUserAction={updateUserAction} />
+          <ImpactPanel user={user} updateUserAction={updateUserAction} />
+        </section>
+
+        <section id="ranking">
+          <Ranking />
+        </section>
       </main>
       <Menu />
     </>
