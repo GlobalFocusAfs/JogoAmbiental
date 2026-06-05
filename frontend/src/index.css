@@ -1,0 +1,263 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: linear-gradient(180deg, #0b2b12 0%, #15362b 100%);
+  color: #f5f7eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, rgba(45, 185, 115, 0.18), transparent 28%),
+    linear-gradient(180deg, #112d1f 0%, #0c1d14 100%);
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px 20px 96px;
+  display: grid;
+  gap: 20px;
+}
+
+.page-center {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.card {
+  background: rgba(14, 32, 20, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+}
+
+.welcome-card {
+  width: min(420px, 100%);
+}
+
+.top-card {
+  position: relative;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+h2, h3 {
+  margin: 0 0 12px;
+}
+
+p {
+  margin: 0 0 12px;
+  line-height: 1.6;
+}
+
+input {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f5f7eb;
+}
+
+.btn {
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  color: #0b2a17;
+  background: #8ee27d;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f5f7eb;
+}
+
+.btn.disabled,
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.icon-btn {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #f5f7eb;
+  cursor: pointer;
+}
+
+.humor {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.humor button {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f5f7eb;
+  font-size: 1.2rem;
+}
+
+.active-mood {
+  background: #8ee27d;
+  color: #0b2a17;
+  border-color: #8ee27d;
+}
+
+.ranking-list {
+  display: grid;
+  gap: 10px;
+}
+
+.ranking-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+}
+
+.message,
+.note {
+  margin-top: 12px;
+  font-size: 0.92rem;
+  color: #d8f1c3;
+}
+
+.nivel {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.barra {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  height: 14px;
+  margin-bottom: 10px;
+}
+
+.progresso {
+  background: linear-gradient(90deg, #8ee27d 0%, #3aa169 100%);
+  height: 100%;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.stats-row div {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 14px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.stats-row strong {
+  display: block;
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+
+.challenge-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.impact-actions {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.assistant-card {
+  background: rgba(19, 57, 31, 0.92);
+}
+
+.assistant-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.95rem;
+  margin-top: 14px;
+}
+
+.menu {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 10px;
+  padding: 14px 20px;
+  background: rgba(10, 24, 14, 0.96);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  justify-content: center;
+  z-index: 10;
+}
+
+.menu button {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f5f7eb;
+  cursor: pointer;
+}
+
+.loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: #b8efbc;
+  font-size: 1.2rem;
+}
+
+@media (min-width: 800px) {
+  .app-shell {
+    padding-bottom: 120px;
+  }
+}
