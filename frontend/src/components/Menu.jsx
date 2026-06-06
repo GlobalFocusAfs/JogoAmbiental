@@ -7,10 +7,9 @@ export default function Menu() {
 
       <div className="credits">
         <span className="credits-copyright">© Paulo Eric e Francinho</span>
-        <span className="credits-author">Francionho</span>
         <img
           className="credits-avatar"
-          src="frontend\Mimikyu\mimikyu.png"
+          src="/Mimikyu/mimikyu.png"
           loading="lazy"
         />
       </div>
