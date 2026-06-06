@@ -10,7 +10,7 @@ export default function Menu() {
         <span className="credits-author">Francionho</span>
         <img
           className="credits-avatar"
-          src="https://dinopixel.com/mimikyu-pixel-art-17382"
+          src="frontend\Mimikyu\mimikyu.png"
           loading="lazy"
         />
       </div>
