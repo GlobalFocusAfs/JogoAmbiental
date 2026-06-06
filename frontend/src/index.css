@@ -344,7 +344,55 @@ button:disabled {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   justify-content: center;
   z-index: 20;
+  align-items: center;
 }
+
+.credits {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding-left: 14px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.credits-copyright {
+  font-size: 0.78rem;
+  color: rgba(232, 245, 222, 0.85);
+  white-space: nowrap;
+}
+
+.credits-author {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #d2f2c7;
+  white-space: nowrap;
+}
+
+.credits-avatar {
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+@media (max-width: 680px) {
+  .credits {
+    gap: 6px;
+    padding-left: 10px;
+  }
+
+  .credits-copyright {
+    display: none;
+  }
+
+  .credits-avatar {
+    width: 16px;
+    height: 16px;
+  }
+}
+
 
 .menu a {
   flex: 1;
