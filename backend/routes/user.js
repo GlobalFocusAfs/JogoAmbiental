@@ -74,13 +74,17 @@ router.post('/action', async (req, res) => {
         user.points += 12;
         creditXPAndRecalc(user, 12);
         break;
-      case 'completeMission':
-        if (user.lastMissionDate === today && user.missionCompleted) {
+      case 'completeMission': {
+        // Garante que a missão do dia só possa ser completada UMA vez por dia.
+        // (mood/ajustes continuam funcionando, mas não repetem a recompensa se já foi feita hoje)
+        if (user.lastMissionDate === today) {
           return res.status(400).json({ error: 'Missão já concluída hoje' });
         }
+
         user.trees += 1;
         user.points += 50;
         creditXPAndRecalc(user, 50);
+
         if (user.mood === 'ansioso') {
           user.walks += 1;
           user.points += 10;
@@ -91,21 +95,27 @@ router.post('/action', async (req, res) => {
           user.points += 5;
           creditXPAndRecalc(user, 5);
         }
-        user.missionCompleted = true;
+
         user.lastMissionDate = today;
+        user.missionCompleted = true;
         break;
+      }
       case 'completeChallenge': {
         const { challengeType, points, incrementField } = req.body;
+
+        // Garante que TODOS os desafios diários (cada tipo) só possam ser completados UMA vez por dia.
         if (user.challenges.lastChallengeDate !== today) {
           user.challenges.recycle = false;
           user.challenges.walk = false;
           user.challenges.water = false;
           user.challenges.lastChallengeDate = today;
         }
+
         const alreadyDone = user.challenges[challengeType];
         if (alreadyDone) {
           return res.status(400).json({ error: 'Desafio já concluído hoje' });
         }
+
         if (incrementField === 'points') {
           user.points += points;
           creditXPAndRecalc(user, points);
@@ -114,6 +124,7 @@ router.post('/action', async (req, res) => {
           user.points += points;
           creditXPAndRecalc(user, points);
         }
+
         user.challenges[challengeType] = true;
         break;
       }
