@@ -11,7 +11,7 @@ export default function MissionCard({ user, updateUserAction }) {
       return;
     }
     await updateUserAction('completeMission');
-    setMsg('🎉 Missão completa! +50 pontos e +1 árvore!');
+    setMsg('🎉 Missão completa! Avanço de +9 níveis e +1 árvore!');
   };
 
   return (

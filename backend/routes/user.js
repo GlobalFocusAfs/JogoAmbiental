@@ -10,6 +10,15 @@ function creditXPAndRecalc(user, xpDelta) {
   return user;
 }
 
+function getMinXpForLevel(level) {
+  const lvl = Number.isFinite(Number(level)) ? Number(level) : 1;
+  // level = floor(xp / XP_PER_LEVEL) + 1
+  // => xp_min = (level - 1) * XP_PER_LEVEL
+  const XP_PER_LEVEL = 500;
+  return Math.max(0, (lvl - 1) * XP_PER_LEVEL);
+}
+
+
 router.post('/init', async (req, res) => {
   const { name } = req.body;
   try {
@@ -62,17 +71,17 @@ router.post('/action', async (req, res) => {
       case 'addTree':
         user.trees += 1;
         user.points += 15;
-        creditXPAndRecalc(user, 15);
+        creditXPAndRecalc(user, 15 * 10);
         break;
       case 'addRecycle':
         user.recyclings += 1;
         user.points += 10;
-        creditXPAndRecalc(user, 10);
+        creditXPAndRecalc(user, 10 * 10);
         break;
       case 'addWalk':
         user.walks += 1;
         user.points += 12;
-        creditXPAndRecalc(user, 12);
+        creditXPAndRecalc(user, 12 * 10);
         break;
       case 'completeMission': {
         // Garante que a missão do dia só possa ser completada UMA vez por dia.
@@ -83,17 +92,24 @@ router.post('/action', async (req, res) => {
 
         user.trees += 1;
         user.points += 50;
-        creditXPAndRecalc(user, 50);
 
+        // Missão do Dia: pular exatamente +9 níveis
+        const currentLevel = user.level || getLevelFromXP(user.xp);
+        const targetLevel = currentLevel + 9;
+        const minXpForTarget = getMinXpForLevel(targetLevel);
+        const xpDelta = Math.max(0, minXpForTarget - (user.xp || 0));
+        creditXPAndRecalc(user, xpDelta);
+
+        // Extras pelo humor continuam funcionando (mantendo regra de 1x/dia)
         if (user.mood === 'ansioso') {
           user.walks += 1;
           user.points += 10;
-          creditXPAndRecalc(user, 10);
+          creditXPAndRecalc(user, 10 * 10);
         }
         if (user.mood === 'feliz') {
           user.recyclings += 1;
           user.points += 5;
-          creditXPAndRecalc(user, 5);
+          creditXPAndRecalc(user, 5 * 10);
         }
 
         user.lastMissionDate = today;
@@ -104,6 +120,7 @@ router.post('/action', async (req, res) => {
         const { challengeType, points, incrementField } = req.body;
 
         // Garante que TODOS os desafios diários (cada tipo) só possam ser completados UMA vez por dia.
+
         if (user.challenges.lastChallengeDate !== today) {
           user.challenges.recycle = false;
           user.challenges.walk = false;
@@ -116,13 +133,14 @@ router.post('/action', async (req, res) => {
           return res.status(400).json({ error: 'Desafio já concluído hoje' });
         }
 
+        const xpToCredit = points * 10;
         if (incrementField === 'points') {
           user.points += points;
-          creditXPAndRecalc(user, points);
+          creditXPAndRecalc(user, xpToCredit);
         } else {
           user[incrementField] += 1;
           user.points += points;
-          creditXPAndRecalc(user, points);
+          creditXPAndRecalc(user, xpToCredit);
         }
 
         user.challenges[challengeType] = true;
