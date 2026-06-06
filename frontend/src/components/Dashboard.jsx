@@ -17,7 +17,8 @@ export default function Dashboard({ user, editUserName }) {
     if (lvl === 2) return { nivel: 2, nome: 'Amigo da Terra' };
     if (lvl === 3) return { nivel: 3, nome: 'Protetor Verde' };
     if (lvl === 4) return { nivel: 4, nome: 'Eco Guardião' };
-    return { nivel: 5, nome: 'Mestre Sustentável' };
+    if (lvl === 5) return { nivel: 5, nome: 'Mestre Sustentável' };
+    return { nivel: 6, nome: 'Guardião da Floresta Viva' };
   };
 
   const useXP = typeof xp === 'number' && typeof levelFromUser === 'number';
