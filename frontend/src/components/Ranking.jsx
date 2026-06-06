@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getRanking } from '../api';
+import { getTitleByLevel } from '../utils/levelTitles';
 
 export default function Ranking() {
   const [ranking, setRanking] = useState([]);
@@ -23,14 +24,7 @@ export default function Ranking() {
     return Math.floor(p / XP_PER_LEVEL) + 1;
   };
 
-  const getTitleByLevel = (lvl) => {
-    if (lvl <= 1) return 'Eco Aprendiz';
-    if (lvl === 2) return 'Amigo da Terra';
-    if (lvl === 3) return 'Protetor Verde';
-    if (lvl === 4) return 'Eco Guardião';
-    if (lvl === 5) return 'Mestre Sustentável';
-    return 'Guardião da Floresta Viva';
-  };
+
 
   return (
     <div className="card">
