@@ -28,6 +28,14 @@ const UserSchema = new mongoose.Schema({
   lastMissionDate: { type: String, default: null },
   missionCompleted: { type: Boolean, default: false },
 
+  // Impacto (limite diário por tipo)
+  impact: {
+    date: { type: String, default: null },
+    treesMarked: { type: Number, default: 0 },
+    recyclesMarked: { type: Number, default: 0 },
+    walksMarked: { type: Number, default: 0 },
+  },
+
   challenges: {
     recycle: { type: Boolean, default: false },
     walk: { type: Boolean, default: false },

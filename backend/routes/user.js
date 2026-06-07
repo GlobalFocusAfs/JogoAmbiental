@@ -32,9 +32,26 @@ router.post('/init', async (req, res) => {
       if (typeof user.level !== 'number') user.level = getLevelFromXP(user.xp);
       if (!user.moodHistory) user.moodHistory = [];
       if (!user.garden) user.garden = { trees: 0, lastWatered: null };
+
+      // Impacto (limite diário)
+      if (!user.impact) {
+        user.impact = {
+          date: null,
+          treesMarked: 0,
+          recyclesMarked: 0,
+          walksMarked: 0,
+        };
+      } else {
+        if (typeof user.impact.treesMarked !== 'number') user.impact.treesMarked = 0;
+        if (typeof user.impact.recyclesMarked !== 'number') user.impact.recyclesMarked = 0;
+        if (typeof user.impact.walksMarked !== 'number') user.impact.walksMarked = 0;
+        if (typeof user.impact.date !== 'string') user.impact.date = null;
+      }
+
       await user.save();
     }
     res.json(user);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -68,21 +85,75 @@ router.post('/action', async (req, res) => {
     const today = new Date().toDateString();
 
     switch (actionType) {
-      case 'addTree':
+      case 'addTree': {
+        // Limite diário: 5 marcações/dia por usuário (tipo independente)
+        if (user.impact?.date !== today) {
+          user.impact = {
+            date: today,
+            treesMarked: 0,
+            recyclesMarked: 0,
+            walksMarked: 0,
+          };
+        }
+
+        const used = user.impact?.treesMarked || 0;
+        if (used >= 5) {
+          return res.status(400).json({ error: 'Limite diário de 🌳 atingido (5/5).' });
+        }
+
         user.trees += 1;
         user.points += 15;
         creditXPAndRecalc(user, 15 * 10);
+
+        user.impact.treesMarked = used + 1;
         break;
-      case 'addRecycle':
+      }
+      case 'addRecycle': {
+        // Limite diário: 5 marcações/dia por usuário (tipo independente)
+        if (user.impact?.date !== today) {
+          user.impact = {
+            date: today,
+            treesMarked: 0,
+            recyclesMarked: 0,
+            walksMarked: 0,
+          };
+        }
+
+        const used = user.impact?.recyclesMarked || 0;
+        if (used >= 5) {
+          return res.status(400).json({ error: 'Limite diário de ♻️ atingido (5/5).' });
+        }
+
         user.recyclings += 1;
         user.points += 10;
         creditXPAndRecalc(user, 10 * 10);
+
+        user.impact.recyclesMarked = used + 1;
         break;
-      case 'addWalk':
+      }
+      case 'addWalk': {
+        // Limite diário: 5 marcações/dia por usuário (tipo independente)
+        if (user.impact?.date !== today) {
+          user.impact = {
+            date: today,
+            treesMarked: 0,
+            recyclesMarked: 0,
+            walksMarked: 0,
+          };
+        }
+
+        const used = user.impact?.walksMarked || 0;
+        if (used >= 5) {
+          return res.status(400).json({ error: 'Limite diário de 🚶 atingido (5/5).' });
+        }
+
         user.walks += 1;
         user.points += 12;
         creditXPAndRecalc(user, 12 * 10);
+
+        user.impact.walksMarked = used + 1;
         break;
+      }
       case 'completeMission': {
         // Garante que a missão do dia só possa ser completada UMA vez por dia.
         // (mood/ajustes continuam funcionando, mas não repetem a recompensa se já foi feita hoje)
