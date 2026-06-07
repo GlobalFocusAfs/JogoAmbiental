@@ -133,7 +133,13 @@ router.post('/action', async (req, res) => {
           return res.status(400).json({ error: 'Desafio já concluído hoje' });
         }
 
-        const xpToCredit = points * 10;
+        // XP dos desafios diários: creditar a quantidade EXATA para subir +2 níveis
+        // (ou seja, levar o usuário até o XP mínimo do nível-alvo)
+        const currentLevel = user.level || getLevelFromXP(user.xp);
+        const targetLevel = currentLevel + 2;
+        const minXpForTarget = getMinXpForLevel(targetLevel);
+        const xpToCredit = Math.max(0, minXpForTarget - (user.xp || 0));
+
         if (incrementField === 'points') {
           user.points += points;
           creditXPAndRecalc(user, xpToCredit);
@@ -142,6 +148,7 @@ router.post('/action', async (req, res) => {
           user.points += points;
           creditXPAndRecalc(user, xpToCredit);
         }
+
 
         user.challenges[challengeType] = true;
         break;
